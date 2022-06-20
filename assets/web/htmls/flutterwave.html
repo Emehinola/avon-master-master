@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Payment</title>
+</head>
+<body>
+</body>
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+
+    //
+    // window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+    //
+    // });
+    function initialiseFlutterWave(data){
+        // var ref=Math.round(Math.random() * 9999999);
+        // ref = ref+'-'+ Date.now();
+        // console.log(ref);
+
+        FlutterwaveCheckout({
+            public_key: "FLWPUBK_TEST-c924c61d96f0c00b44cf5394b8ad3096-X",
+            tx_ref: data.reference,
+            amount: data.amount,
+            currency: "NGN",
+            country: "NG",
+            payment_options: "account,card,banktransfer,qr,ussd",
+            customer: {
+                email: data.email,
+                phone_number: data.phone,
+                name: data.name,
+            },
+            callback: function (data) {18635284
+                // console.log(data);
+                window.flutter_inappwebview.callHandler('payment_response', JSON.stringify(data));
+            },
+            onclose: function() {
+                // close modal
+                window.flutter_inappwebview.callHandler('exit');
+            },
+            customizations: {
+                title: "Avon",
+                description: data.description,
+                logo: "",
+            },
+        });
+    }
+
+
+</script>
+</html>

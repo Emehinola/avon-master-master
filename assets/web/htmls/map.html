@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Address </title>
+</head>
+<body>
+<div class="place"></div>
+</body>
+<script>
+    function showLocation(address){
+        var addr = address;
+        var embed= "<iframe width='100%' height='100%' frameborder='0'"+
+        "scrolling='no' marginheight='0' marginwidth='0'"+
+        "src='https://maps.google.com/maps?&amp;q="+
+        encodeURIComponent( addr ) +
+        "&amp;output=embed'></iframe>";
+            console.log(embed);
+            document.write(embed);
+    }
+</script>
+</html>
