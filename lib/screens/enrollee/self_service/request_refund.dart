@@ -170,15 +170,35 @@ class _RequestRefundScreenState extends State<RequestRefundScreen> {
                     GestureDetector(
                       child: AVInputField(
                         label: "Hospital",
-                        hintText: "Select Hospital",
-                        disabled: true,
+                        hintText: "Hospital's Name",
+                        disabled: false,
                         controller: _hospitalController,
                         validator: (String? v) =>
                             ValidationService.isValidInput(v!),
-                        icon: Icon(Icons.arrow_drop_down),
+                        
                       ),
                       onTap: selectHospital,
                     ),
+                    if(hospital != null)
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text("${hospital?.address}", style: TextStyle(
+                            color: Colors.black45
+                        )),
+                      ),
+                    // SizedBox(height: 15),
+                    // GestureDetector(
+                    //   child: AVInputField(
+                    //     label: "Hospital",
+                    //     hintText: "Select Hospital",
+                    //     disabled: true,
+                    //     controller: _hospitalController,
+                    //     validator: (String? v) =>
+                    //         ValidationService.isValidInput(v!),
+                    //     icon: Icon(Icons.arrow_drop_down),
+                    //   ),
+                    //   onTap: selectHospital,
+                    // ),
                     // if(hospital != null)
                     //   Align(
                     //     alignment: Alignment.topLeft,
@@ -186,6 +206,7 @@ class _RequestRefundScreenState extends State<RequestRefundScreen> {
                     //         color: Colors.black45
                     //     )),
                     //   ),
+
                     SizedBox(height: 10),
                     AVDropdown(
                       options: options,

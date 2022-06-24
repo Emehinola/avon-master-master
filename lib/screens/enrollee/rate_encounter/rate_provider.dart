@@ -41,8 +41,15 @@ class _RateProviderScreenState extends State<RateProviderScreen> {
     "Poor": 4,
     "Very Poor": 5,
   };
-
   Map<String, int> accessDifficulties = {
+    "Very Easy": 1,
+    "Easy": 2,
+    "Fair": 3,
+    "Difficult": 4,
+    "Very Difficult": 5,
+  };
+
+  Map<String, int> experiences = {
     "Very dissatisfied": 1,
     "Somewhat dissatisfied": 2,
     "Indifferent": 3,
@@ -51,149 +58,149 @@ class _RateProviderScreenState extends State<RateProviderScreen> {
   };
 
   String? performance;
+  String? experience;
   String? accessDifficulty;
 
   @override
   Widget build(BuildContext context) {
     return AVScaffold(
-        title: "Rate Your Provider",
-        showAppBar: true,
-        decoration: BoxDecoration(color: Colors.white),
-        child: Stack(children: [
-          Container(
-            constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height -
-                    (MediaQuery.of(context).padding.top + kToolbarHeight)),
-            height: double.negativeInfinity,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                        child: Text(
-                      "Did you access medical care recently? How would you rate the service received from your healthcare provider?",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    )),
-                    // const SizedBox(height: 30),
-                    // Visibility(
-                    //   visible: _hospitalController.text.isNotEmpty,
-                    //   child: AVDropdown(
-                    //     label: "How easy was it for you accessing care?",
-                    //     options: performances.keys.toList(),
-                    //     value: performance,
-                    //     onChanged: (dynamic v) {
-                    //       setState(() {
-                    //         performance = v;
-                    //       });
-                    //     },
-                    //   ),
-                    // ),
-                    const SizedBox(height: 30),
-                    Visibility(
-                      visible: _hospitalController.text.isNotEmpty,
-                      child: AVDropdown(
-                        label:
-                            "How satisfied are you with your service experience at ${_hospitalController.text}",
-                        options: accessDifficulties.keys.toList(),
-                        value: accessDifficulty,
-                        onChanged: (dynamic v) {
-                          setState(() {
-                            accessDifficulty = v;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    GestureDetector(
-                      child: AVInputField(
-                        label: "Select a provider",
-                        labelText: "Select",
-                        disabled: true,
-                        icon: Icon(Icons.arrow_drop_down),
-                        validator: (String? v) =>
-                            ValidationService.isValidInput(v!, minLength: 5),
-                        controller: _hospitalController,
-                      ),
-                      onTap: selectHospital,
-                    ),
-                    const SizedBox(height: 15),
-                    RatingBar.builder(
-                      itemCount: 10,
-                      itemSize: 22,
-                      onRatingUpdate: (double v) {
-                        setState(() {
-                          rating = v;
-                        });
-                      },
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-                      unratedColor: Color(0xffEDF2F7),
-                      itemBuilder: (context, index) => Icon(
-                        Icons.star_border_outlined,
-                        color: Colors.amber,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: SizedBox(
-                        width: 350,
-                        child: Text(
-                          "Select a rating from 1-10",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                    AVInputField(
-                      label: "Additional comments (optional)",
-                      labelText: "Type here",
-                      height: 160,
-                      minLines: 5,
-                      maxLines: 6,
-                      validator: (String? v) => null,
-                      controller: _controller,
-                      inputType: TextInputType.multiline,
-                      inputAction: TextInputAction.newline,
-                    )
-                  ],
+      title: "Rate Your Provider",
+      showAppBar: true,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Container(
+        constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height -
+                (MediaQuery.of(context).padding.top + kToolbarHeight)),
+        height: double.negativeInfinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
+                Center(
+                    child: Text(
+                  "Did you access medical care recently? How would you rate the service received from your healthcare provider?",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w300,
+                  ),
+                )),
+                const SizedBox(height: 30),
+                GestureDetector(
+                  child: AVInputField(
+                    label: "Select a provider",
+                    labelText: "Select",
+                    disabled: true,
+                    icon: Icon(Icons.arrow_drop_down),
+                    validator: (String? v) =>
+                        ValidationService.isValidInput(v!, minLength: 5),
+                    controller: _hospitalController,
+                  ),
+                  onTap: selectHospital,
+                ),
+                const SizedBox(height: 10),
+                Visibility(
+                  visible: _hospitalController.text.isNotEmpty,
+                  child: AVDropdown(
+                    label: "How easy was it for you accessing care?",
+                    options: accessDifficulties.keys.toList(),
+                    value: accessDifficulty,
+                    onChanged: (dynamic v) {
+                      setState(() {
+                        accessDifficulty = v;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Visibility(
+                  visible: _hospitalController.text.isNotEmpty,
+                  child: AVDropdown(
+                    label:
+                        "How satisfied are you with your service experience at ${_hospitalController.text}",
+                    options: experiences.keys.toList(),
+                    value: experience,
+                    onChanged: (dynamic v) {
+                      setState(() {
+                        experience = v;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Center(
+                  child: SizedBox(
+                    width: 350,
+                    child: Text(
+                      "How likely are you to recommend AVON HMO to your family and friends?",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                RatingBar.builder(
+                  itemCount: 10,
+                  itemSize: 22,
+                  onRatingUpdate: (double v) {
+                    setState(() {
+                      rating = v;
+                    });
+                  },
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                  unratedColor: Color(0xffEDF2F7),
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star_border_outlined,
+                    color: Colors.amber,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                AVInputField(
+                  label: "Additional comments (optional)",
+                  labelText: "Type here",
+                  height: 160,
+                  minLines: 5,
+                  maxLines: 6,
+                  validator: (String? v) => null,
+                  controller: _controller,
+                  inputType: TextInputType.multiline,
+                  inputAction: TextInputAction.newline,
+                ),
+                SizedBox(height: 30),
+              ],
             ),
           ),
-          Positioned(
-            bottom: 10,
-            right: 15,
-            left: 15,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(bottom: 10),
-              child: AVTextButton(
-                  radius: 5,
-                  child: Text("Submit Rating",
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
-                  disabled: isLoading,
-                  showLoader: isLoading,
-                  verticalPadding: 17,
-                  callBack: _submit),
-            ),
-          )
-        ]));
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 10),
+          height: 55,
+          child: AVTextButton(
+              radius: 5,
+              child: Text("Submit Rating",
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
+              disabled: isLoading,
+              showLoader: isLoading,
+              verticalPadding: 17,
+              callBack: _submit),
+        ),
+      ),
+    );
   }
 
   void selectHospital() {
@@ -234,7 +241,7 @@ class _RateProviderScreenState extends State<RateProviderScreen> {
         "providerId": hospital?.code.toString(),
         "rating": rating,
         "review": _controller.text,
-        // "performace": accessDifficulties[accessDifficulty]
+        "performance": accessDifficulties[accessDifficulty]
       };
       http.Response response = await HttpServices.post(
           context, 'enrollee/actions/provider-rating', payload);

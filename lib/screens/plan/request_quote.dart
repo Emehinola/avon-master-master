@@ -13,6 +13,7 @@ import 'package:avon/widgets/scaffolds.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:avon/utils/services/storage.dart';
 
 class RequestQuoteScreen extends StatefulWidget {
   Plan plan;
@@ -52,7 +53,7 @@ class _RequestQuoteScreenState extends State<RequestQuoteScreen> {
       _firstNameController.text = user.firstName;
       _lastNameController.text = user.lastName;
       _emailController.text = user.email;
-      _phoneNumberController.text = user.mobilePhone;
+      _phoneNumberController.text =  AvonData().avonData.get('phoneNumber'); //user.mobilePhone;
       _PlanCategoryController.text = widget.plan.planTypeName;
     } else {
       _PlanCategoryController.text = widget.planTypeName.toString();

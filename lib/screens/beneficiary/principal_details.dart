@@ -113,7 +113,7 @@ class _PrincipalDetailsScreenState extends State<PrincipalDetailsScreen> {
         _sponsorEmailController.text =
             "${AvonData().avonData.get('sponsorEmail${widget.index}')}";
         _phoneController.text =
-            "${AvonData().avonData.get('phoneNumber${widget.index}')}";
+            "${AvonData().avonData.get('phoneNumber${widget.index}') ?? AvonData().avonData.get('phoneNumber') ?? ""}";
       }
       // _phoneController.text = "${state?.user.mobilePhone ?? ""}";
     } else if (state?.currentEnrolleData!['details'] != null) {
@@ -335,7 +335,8 @@ class _PrincipalDetailsScreenState extends State<PrincipalDetailsScreen> {
                           ),
 
                         if (!(state!.isLoggedIn) ||
-                            (state?.currentPlanData!['isSponsor']))
+                            (state?.currentPlanData!['isSponsor']) ||
+                            (state!.isLoggedIn))
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: AVInputField(
@@ -346,7 +347,9 @@ class _PrincipalDetailsScreenState extends State<PrincipalDetailsScreen> {
                                   ValidationService.isValidPhoneNumber(v!),
                             ),
                           ),
-                        SizedBox(height: 10),
+                        if ((state?.currentPlanData!['isSponsor']) &&
+                            (!state!.isLoggedIn))
+                          SizedBox(height: 10),
                         if ((state?.currentPlanData!['isSponsor']) &&
                             (!state!.isLoggedIn))
                           Padding(
@@ -359,9 +362,11 @@ class _PrincipalDetailsScreenState extends State<PrincipalDetailsScreen> {
                                   ValidationService.isValidEmail(v!),
                             ),
                           ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        if ((state?.currentPlanData!['isSponsor']) &&
+                            (!state!.isLoggedIn))
+                          SizedBox(
+                            height: 10,
+                          ),
                         if ((state?.currentPlanData!['isSponsor']) &&
                             (!state!.isLoggedIn))
                           Padding(

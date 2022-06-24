@@ -85,12 +85,25 @@ class _HealthBenefitScreenState extends State<HealthBenefitScreen> {
                                 children: [
                                   bodyCell(e['benefitName'],
                                       isFirstColumn: true),
-                                  bodyCell(e['waitingPeriod']),
-                                  bodyCell((format.format(
-                                          double.parse(e['valueLimit'])))
-                                      .toString()),
-                                  bodyCell(e['frequencyLimit']),
-                                  bodyCell(e['age'], isLastColumn: true),
+                                  bodyCell(e['waitingPeriod'].toString() == '0'
+                                      ? "✓"
+                                      : e['waitingPeriod']),
+                                  bodyCell(format
+                                              .format(
+                                                  double.parse(e['valueLimit']))
+                                              .toString() ==
+                                          '0'
+                                      ? "✓"
+                                      : format.format(
+                                          double.parse(e['valueLimit']))),
+                                  bodyCell(e['frequencyLimit'].toString() == '0'
+                                      ? "✓"
+                                      : e['frequencyLimit']),
+                                  bodyCell(
+                                      e['age'].toString() == '0'
+                                          ? "✓"
+                                          : e['age'],
+                                      isLastColumn: true),
                                 ]))
                         .toList(),
                   ],
